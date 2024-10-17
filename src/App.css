@@ -1,38 +1,125 @@
-.App {
+
+body {
+  margin: 0; 
+  padding: 0; 
+  height: 100vh; 
+}
+
+.piano-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh; 
+  position: relative;
+  background: linear-gradient(to bottom, #cce0f5, #7bb0e8);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+  background-color: rgba(145 136 136 / 50%);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.lines {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  height: calc(100vh - 100px); 
+  position: relative;
+}
+
+.line {
+  position: relative;
+  width: 50px;
+  border-left: 2px solid white;
+  height: 100%;
+}
+
+.note {
+  position: absolute;
+  width: 40px;
+  height: 60px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 2px solid white;
   text-align: center;
+  line-height: 60px;
+  color: white;
+  font-size: 20px;
+  transition: top 0.1s linear;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.footer {
+  width: 100%;
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  text-align: center;
+  line-height: 50px;
+  font-weight: bold;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.game-over-screen {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  background: linear-gradient(to bottom, #cce0f5, #7bb0e8);
   color: white;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 24px;
 }
 
-.App-link {
-  color: #61dafb;
+.final-score {
+  font-size: 72px;
+  color: red;
+  margin: 20px 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.reset-button {
+  padding: 10px 20px;
+  font-size: 20px;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background-color 0.3s;
 }
+
+.start-screen {
+  width: 100%;
+  height: 100%;
+  background-size: cover; 
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+}
+
+
+.reset-button:hover {
+  background-color: lightgray;
+}
+
+.level-selector {
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  gap: 10px; 
+}
+
+.level-button {
+  margin: 10px 0; 
+  padding: 5px 80px;
+  width: 100%;
+  height: 100%;
+  font-size: 18px;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
