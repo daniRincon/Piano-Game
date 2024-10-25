@@ -27,31 +27,38 @@ body {
 
 .lines {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-around; /* Espacio uniforme entre columnas */
   width: 100%;
-  height: calc(100vh - 100px); 
+  height: calc(100vh - 100px);
   position: relative;
 }
 
 .line {
+  display: flex;              
+  justify-content: center;    
+  align-items: flex-start;    
   position: relative;
-  width: 50px;
+  width: calc(100% / 5); /* Ancho del 20% para 5 líneas */
   border-left: 2px solid white;
   height: 100%;
 }
 
 .note {
-  position: absolute;
+  position: absolute;         
   width: 40px;
   height: 60px;
   background-color: rgba(0, 0, 0, 0.3);
   border: 2px solid white;
-  text-align: center;
-  line-height: 60px;
+  display: flex;             
+  align-items: center;       
+  justify-content: center;   
   color: white;
   font-size: 20px;
   transition: top 0.1s linear;
 }
+
+
+
 
 .footer {
   width: 100%;
