@@ -10,46 +10,51 @@ app.use(cors());
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "http://localhost:3000", // Cambia esto si tu cliente está en otra dirección
     methods: ["GET", "POST"]
   }
 });
 
-// Inicializa el puerto serie
-const portName = 'COM6'; // Cambia esto por el puerto correcto donde está conectado tu Arduino
+// Configura el puerto serie
+const portName = 'COM6'; // Cambia esto por el puerto donde está conectado tu Arduino
 const serialPort = new SerialPort({
   path: portName,
-  baudRate: 9600 // Asegúrate de que este valor coincida con la configuración de tu Arduino
+  baudRate: 115200 // Asegúrate de que coincide con la configuración de tu Arduino
 });
 
-// Usar un parser para dividir los datos en líneas
+// Usa un parser para dividir los datos por línea
 const parser = serialPort.pipe(new ReadlineParser({ delimiter: '\r\n' }));
 
-// Maneja los datos recibidos del puerto serie
-parser.on('data', (data) => {
-  const message = data.toString();
-  console.log('Mensaje recibido del Arduino:', message);
-
-  // Emitir el mensaje a los clientes conectados
-  io.emit('rfidMessage', message); // Emitir el mensaje a los clientes a través de WebSocket
+// Mensaje cuando el puerto serie está abierto
+serialPort.on('open', () => {
+  console.log(`Puerto serie ${portName} abierto a ${serialPort.baudRate} baudios`);
 });
 
-// Manejar errores del puerto serie
+// Manejo de datos recibidos del puerto serie
+parser.on('data', (data) => {
+  const message = data.toString().trim();
+  console.log('Mensaje recibido del Arduino:', message);
+
+  // Emitir el mensaje a todos los clientes conectados
+  io.emit('rfidMessage', message);
+});
+
+// Manejo de errores en el puerto serie
 serialPort.on('error', (err) => {
   console.error('Error en el puerto serie:', err.message);
 });
 
-// Cuando un cliente se conecta
+// Cuando un cliente se conecta vía Socket.io
 io.on('connection', (socket) => {
   console.log('Nuevo cliente conectado:', socket.id);
 
-  // Manejar la desconexión del cliente
+  // Escuchar por desconexión del cliente
   socket.on('disconnect', () => {
-    console.log('Cliente desconectado');
+    console.log('Cliente desconectado:', socket.id);
   });
 });
 
-// Iniciar el servidor
+// Inicia el servidor HTTP
 server.listen(4000, () => {
   console.log('Servidor escuchando en el puerto 4000');
 });

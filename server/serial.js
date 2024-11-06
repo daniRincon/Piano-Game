@@ -19,15 +19,19 @@ parser.on('data', (data) => {
   const message = data.toString().trim(); // Elimina espacios en blanco o saltos de línea extra
   console.log('Mensaje recibido: ', message);
 
-  // Aquí puedes manejar el mensaje recibido según lo que se espere de los pulsadores
-  // Por ejemplo, puedes enviar este dato al servidor o ejecutar alguna lógica.
-  
+  // Lógica para manejar los mensajes de los pulsadores
   if (message === '1') {
     console.log('Pulsador 1 presionado');
     // Lógica para el pulsador 1
   } else if (message === '2') {
     console.log('Pulsador 2 presionado');
     // Lógica para el pulsador 2
+  } else if (message === '3') {
+    console.log('Pulsador 3 presionado');
+    // Lógica para el pulsador 3
+  } else if (message === '4') {
+    console.log('Pulsador 4 presionado');
+    // Lógica para el pulsador 4
   } else {
     console.log('Mensaje desconocido: ', message);
   }

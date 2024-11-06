@@ -3,7 +3,7 @@ import "./App.css";
 import LevelSelector from "./selectordeniveles";
 import { io } from "socket.io-client";
 
-const NUMBER_OF_LINES = 5;
+const NUMBER_OF_LINES = 4;
 const NOTE_REMOVAL_HEIGHT = 510; // Altura donde se eliminarán las notas
 const PULSE_LIMIT_HEIGHT = 350;   // Nueva altura límite para pulsar
 const GAME_TIME_LIMIT = 60;       // Límite de tiempo de 60 segundos
@@ -31,23 +31,22 @@ function App() {
         const noteLine = parseInt(data); // Asegurarse de que 'data' sea el índice correcto de la línea
         console.log(`Pulsador ${noteLine} presionado`);
 
-        if (noteLine === 2) {
-          setNotes((prevNotes) =>
-            prevNotes.map((note) => {
-              if (
-                note.line === 1 &&
-                note.top > PULSE_LIMIT_HEIGHT &&
-                note.top < NOTE_REMOVAL_HEIGHT &&
-                note.color !== "#FF0000" &&
-                note.color !== "#00FF00"
-              ) {
-                setCollectedNotes((prev) => prev + 1); // Incrementar el puntaje de 1 en 1
-                return { ...note, color: "#00FF00" };  // Cambiar la nota a verde
-              }
-              return note;
-            })
-          );
-        }
+        setNotes((prevNotes) =>
+          prevNotes.map((note) => {
+            // Si la línea coincide y la nota no ha sido ya presionada ni está fuera del rango
+            if (
+              note.line === noteLine && // Comparar la línea de la nota con el pulsador
+              note.top > PULSE_LIMIT_HEIGHT &&
+              note.top < NOTE_REMOVAL_HEIGHT &&
+              note.color !== "#00FF00" &&  // Solo cambiar de color si no está ya verde
+              note.color !== "#FF0000"     // Y no está roja
+            ) {
+              setCollectedNotes((prev) => prev + 1); // Incrementar el puntaje de 1 en 1
+              return { ...note, color: "#00FF00" };  // Cambiar la nota a verde
+            }
+            return note;
+          })
+        );
       });
     }
   }, [socket, notes]);
